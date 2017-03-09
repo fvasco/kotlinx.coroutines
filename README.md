@@ -24,24 +24,24 @@ Library support for Kotlin coroutines. This is a companion version for Kotlin 1.
 
 > Note that these libraries are experimental and are subject to change.
 
-The libraries are published to [kotlin-eap-1.1](https://bintray.com/kotlin/kotlin-eap-1.1/kotlinx.coroutines) bintray repository.
+The libraries are published to [kotlinx](https://bintray.com/kotlin/kotlinx/kotlinx.coroutines) bintray repository
+and also linked to [jcenter](https://bintray.com/bintray/jcenter?filterByPkgName=kotlinx.coroutines)
 
 These libraries require kotlin compiler version to be at least `1.1.0` and 
 require kotlin runtime of the same version as a dependency.
 
 ### Maven
 
-Add the bintray repository to `<repositories>` section (and also add `pluginRepository` to `<pluginRepositories>`,
-if you're willing to get `kotlin-maven-plugin` from there):
+Add the bintray repository to `<repositories>` section:
 
 ```xml
 <repository>
     <snapshots>
         <enabled>false</enabled>
     </snapshots>
-    <id>dl</id>
+    <id>jcenter</id>
     <name>bintray</name>
-    <url>http://dl.bintray.com/kotlin/kotlin-eap-1.1</url>
+    <url>http://jcenter.bintray.com</url>
 </repository>
 ```
 
@@ -65,13 +65,11 @@ And make sure that you use the right Kotlin version:
 
 ### Gradle
 
-Add the bintray repository (and also add it to `buildScript` section, if you're willing to get `kotlin-gradle-plugin` from there):
+Add the bintray repository:
 
 ```groovy
 repositories {
-    maven {
-        url "http://dl.bintray.com/kotlin/kotlin-eap-1.1"
-    }
+    jcenter()
 }
 ```
 
