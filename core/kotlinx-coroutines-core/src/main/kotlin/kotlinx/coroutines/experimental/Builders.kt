@@ -25,6 +25,27 @@ import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
 // --------------- basic coroutine builders ---------------
 
 /**
+ * Execute the given [block] in an unbounded blocking executor.
+ * If the current thread is a blocking one then the [block] is executed immediately,
+ * otherwise the coroutine is suspended and the [block] is scheduled for execution on a different thread.
+ */
+public suspend fun <T> blocking(block: () -> T): T = when {
+    BlockingPool.isDispatchNeeded() ->
+        suspendCoroutine { continuation ->
+            BlockingPool.execute {
+                val res = try {
+                    block()
+                } catch (exception: Throwable) {
+                    continuation.resumeWithException(exception)
+                    return@execute
+                }
+                continuation.resume(res)
+            }
+        }
+    else -> block()
+}
+
+/**
  * Launches new coroutine without blocking current thread and returns a reference to the coroutine as a [Job].
  * The coroutine is cancelled when the resulting job is [cancelled][Job.cancel].
  *
